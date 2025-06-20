@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registreren</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Ubuntu', sans-serif;
+            background: linear-gradient(to bottom, #f3f4f6 70%, #d1d5db 70%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: #1f2937;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            font-style: italic;
+            font-weight: 600;
+            color: #6b7280;
+            margin-bottom: 2rem;
+        }
+        .logo-highlight {
+            color: #ef4444;
+        }
+        form {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 400px;
+        }
+        .row {
+            display: flex;
+            gap: 1rem;
+        }
+        .row input {
+            flex: 1;
+        }
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #2563eb;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        button:hover {
+            background-color: #1d4ed8;
+        }
+        .login-link {
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            color: #2563eb;
+        }
+        .login-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+            color: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+<h1>Comp<span class="logo-highlight">HU</span>table</h1>
+<p class="subtitle">Welkom terug bij de simpelste tool!</p>
+
+<form id="registerForm">
+    <div class="row">
+        <input type="text" name="firstname" placeholder="Voornaam" required />
+        <input type="text" name="lastname" placeholder="Achternaam" required />
+    </div>
+    <input type="email" name="email" placeholder="E-mailadres" required />
+    <input type="password" name="password" placeholder="Wachtwoord" required />
+    <button type="submit">Registreren</button>
+</form>
+
+<div class="login-link">
+    <p>Heb je al een account? <a href="login.html">Log in hier</a></p>
+</div>
+
+<script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const firstname = document.querySelector('input[name="firstname"]').value;
+        const lastname = document.querySelector('input[name="lastname"]').value;
+        const email = document.querySelector('input[name="email"]').value;
+        const password = document.querySelector('input[name="password"]').value;
+
+        try {
+            const response = await fetch('http://localhost:3000/api/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ firstname, lastname, email, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert('Registratie gelukt!');
+                window.location.href = 'login.html';
+            } else {
+                alert('Fout: ' + (data.error || 'Onbekende fout'));
+            }
+        } catch (err) {
+            alert('Netwerkfout. Zorg dat de backend draait.');
+            console.error(err);
+        }
+    });
+</script>
+</body>
+</html>
