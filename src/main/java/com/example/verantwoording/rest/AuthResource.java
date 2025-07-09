@@ -11,9 +11,9 @@ import java.util.Map;
 @Path("/auth")
 public class AuthResource {
 
-    private final String DB_URL = "jdbc:postgresql://85.214.67.145:5432/postgres";
-    private final String DB_USER = "postgres";
-    private final String DB_PASSWORD = "rBHuygBSuewHR7BgllzIV8CvsX0Yc9SHnZ3HVguYr9xZiswlzuo34tVcSI8NFxIY";
+    private final String DB_URL = "`jouw database url";
+    private final String DB_USER = "Jouw user";
+    private final String DB_PASSWORD = "Jouwdatabase wachtwoord";
 
     @POST
     @Path("/register")
